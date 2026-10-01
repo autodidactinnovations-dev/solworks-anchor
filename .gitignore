@@ -1,0 +1,4 @@
+   .env
+   anchor.db
+   tamper_copy.db
+   __pycache__/
