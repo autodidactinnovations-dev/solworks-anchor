@@ -1,4 +1,18 @@
-   .env
-   anchor.db
-   tamper_copy.db
-   __pycache__/
+# Secrets: never commit
+.env
+.env.*
+*.key
+*.pem
+
+# Local data: salts, hashes and the private log stay on this machine
+*.db
+*.db-journal
+anchor_log.txt
+
+# Private notes
+METROPOLIS_SUBMISSION.md
+
+# Python
+__pycache__/
+*.pyc
+venv/
