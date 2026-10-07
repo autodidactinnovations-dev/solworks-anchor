@@ -283,10 +283,11 @@ async function loadLedger() {
 
     const listed = new Set(results.map((r) => r.anchorId).filter((n) => n !== undefined));
     const unlisted = [...Array(info.anchorCount).keys()].filter((n) => !listed.has(n));
-    if (unlisted.length) {
-      $("extra").textContent = `The contract holds ${info.anchorCount} anchors. ` +
-        `Anchor ${unlisted.map((n) => "#" + n).join(", ")} ${unlisted.length > 1 ? "are" : "is"} not one of the nightly log batches (a setup test before nightly anchoring began).`;
-    }
+    const notes = [];
+    if (unlisted.includes(0)) notes.push("Anchor #0 was a setup test before nightly anchoring began.");
+    const newer = unlisted.filter((n) => n > 0);
+    if (newer.length) notes.push(`${newer.length} newer anchor${newer.length > 1 ? "s are" : " is"} onchain but not yet listed on this page.`);
+    if (notes.length) $("extra").textContent = `The contract holds ${info.anchorCount} anchors. ` + notes.join(" ");
   } catch (e) {
     setBanner("bad", "Couldn't reach Monad", e.message + ". Try reloading the page.");
   }
